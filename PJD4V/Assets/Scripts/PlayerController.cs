@@ -129,6 +129,24 @@ public class PlayerController : MonoBehaviour, IDamageable
         _hasKey = false;
         HUDObserverManager.KeyChanged(_hasKey);
 
+        GameManager.Instance.PlayerController = this;
+
+    }
+
+    public void ResetPlayer()
+    {
+        _dead = false;
+        _active = true;
+        
+        _rigidbody2D.velocity = Vector2.zero;
+        _playerMovement = Vector2.zero;
+        _animator.Play("Idle");
+        
+        _currentEnergy = maxEnergy;
+        HUDObserverManager.PlayerEnergyChangedChannel(_currentEnergy);
+        
+        _coins = 0;
+        HUDObserverManager.CoinsChanged(_coins);
     }
 
     private void Update()
@@ -512,14 +530,14 @@ public class PlayerController : MonoBehaviour, IDamageable
             HUDObserverManager.PlayerEnergyChangedChannel(_currentEnergy);
             
             
-            normalSFXSource.PlayOneShot(playerSFX[2]);
+            normalSFXSource.PlayOneShot(playerSFX[2], 0.5f);
             Destroy(other.gameObject);
         }
 
         if (other.CompareTag("ExtraLife"))
         {
             GameManager.Instance.AddLife(1);
-            normalSFXSource.PlayOneShot(playerSFX[7]);
+            normalSFXSource.PlayOneShot(playerSFX[7], 0.5f);
             Destroy(other.gameObject);
         }
 
@@ -527,7 +545,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             _coins++;
             HUDObserverManager.CoinsChanged(_coins);
-            normalSFXSource.PlayOneShot(playerSFX[4]);
+            normalSFXSource.PlayOneShot(playerSFX[4],0.2f);
             Destroy(other.gameObject);
         }
 
@@ -537,7 +555,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             {
                 _hasKey = true;
                 HUDObserverManager.KeyChanged(_hasKey);
-                normalSFXSource.PlayOneShot(playerSFX[8]);
+                normalSFXSource.PlayOneShot(playerSFX[8], 0.3f);
                 Destroy(other.gameObject);
             }
             
@@ -550,6 +568,16 @@ public class PlayerController : MonoBehaviour, IDamageable
             _hasKey = false;
             HUDObserverManager.KeyChanged(_hasKey);
         }
+        
+        if (other.gameObject.CompareTag("Checkpoint"))
+        {
+            GameManager.Instance.ProcessCheckpoint(other.gameObject);
+        }
+    }
+
+    public void ValidCheckpointSound()
+    {
+        normalSFXSource.PlayOneShot(playerSFX[9], 0.5f);
     }
 
     private void SpendEnergy()

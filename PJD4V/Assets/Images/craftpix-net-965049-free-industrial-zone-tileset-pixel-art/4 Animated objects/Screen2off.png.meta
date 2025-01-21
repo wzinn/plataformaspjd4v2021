@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 06dbe6fe585ee4c3dabaf1745833fc93
+guid: efb7017e386514d368d1bb7240c078c2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -65,7 +65,7 @@ TextureImporter:
   ignorePngGamma: 0
   applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Screen2_0
+      name: Screen2off_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1009b1565e8a34e0eaa7b1781807854c
-      internalID: 398229551
+      spriteID: e01db46e0c3bc4486b15b18d8a87438a
+      internalID: -665411328
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Screen2_1
+      name: Screen2off_1
       rect:
         serializedVersion: 2
         x: 32
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff646979517e84878b817767dd82a2db
-      internalID: -1739719613
+      spriteID: 4ee015acf9a984f25a9712ecc2e4d1ff
+      internalID: 1754734734
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Screen2_2
+      name: Screen2off_2
       rect:
         serializedVersion: 2
         x: 64
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97d935b3ecd3349329f56003353cf9b0
-      internalID: 73236874
+      spriteID: 7f5d1ca2def864e96a61871d07b40012
+      internalID: 1077146136
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Screen2_3
+      name: Screen2off_3
       rect:
         serializedVersion: 2
         x: 96
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb49ff8379c8c4270b94398d6e0be816
-      internalID: 1940863429
+      spriteID: 4ee3b2abbea914652b85cdd750b10e05
+      internalID: 409050824
       vertices: []
       indices: 
       edges: []
@@ -217,10 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Screen2_0: 398229551
-      Screen2_1: -1739719613
-      Screen2_2: 73236874
-      Screen2_3: 1940863429
+      Screen2off_0: -665411328
+      Screen2off_1: 1754734734
+      Screen2off_2: 1077146136
+      Screen2off_3: 409050824
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

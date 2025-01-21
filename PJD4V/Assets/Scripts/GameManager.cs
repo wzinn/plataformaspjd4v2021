@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
 
     public string levelName;
 
+    public GameObject LastCheckpoint;
+    public PlayerController PlayerController;
+
     private void Awake()
     {
         if (Instance == null)
@@ -78,7 +81,14 @@ public class GameManager : MonoBehaviour
 
     public void ResetCurrentLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if(LastCheckpoint == null)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else
+        {
+            PlayerController.transform.position = LastCheckpoint.transform.position;
+            PlayerController.ResetPlayer();
+        }
+        
     }
 
     public void LoadLevel1()
@@ -115,5 +125,23 @@ public class GameManager : MonoBehaviour
         HUDObserverManager.LivesChangedChannel(Lives);
         Lives = 3;
         HUDObserverManager.LivesChangedChannel(Lives);
+    }
+
+    public void ProcessCheckpoint(GameObject otherGameObject)
+    {
+        if (LastCheckpoint == null)
+        {
+            LastCheckpoint = otherGameObject;
+            LastCheckpoint.GetComponent<Animator>().Play("Active");
+            PlayerController.ValidCheckpointSound();
+        } 
+        else if (otherGameObject != LastCheckpoint)
+        {
+            LastCheckpoint.GetComponent<Animator>().Play("Off");
+
+            LastCheckpoint = otherGameObject;
+            LastCheckpoint.GetComponent<Animator>().Play("Active");
+            PlayerController.ValidCheckpointSound();
+        }
     }
 }

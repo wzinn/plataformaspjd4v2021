@@ -15,6 +15,7 @@ TagManager:
   - Ground
   - Key
   - Door
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

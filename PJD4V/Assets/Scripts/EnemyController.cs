@@ -14,6 +14,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     
     [SerializeField] private Vector2 movePosition;
     [SerializeField] private Transform moveDestination;
+    [SerializeField] private int blinkHitTimes;
+    [SerializeField] private float blinkHitDuration;
     
     private Vector2 _initialPosition;
 
@@ -34,13 +36,16 @@ public class EnemyController : MonoBehaviour, IDamageable
     private Collider2D _collider2D;
     
     private AudioSource _audioSource;
-    
+
+    private SpriteRenderer _spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
         _collider2D = GetComponent<Collider2D>();
         _audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _isAlive = true;
         
@@ -101,6 +106,8 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         _currentEnergy -= damage;
 
+        StartCoroutine(HitBlink());
+
         if (_currentEnergy <= 0)
         {
             //TODO: Gerenciar morte  do inimigo
@@ -113,6 +120,20 @@ public class EnemyController : MonoBehaviour, IDamageable
         }
 
         if (_currentEnergy > maxEnergy) _currentEnergy = maxEnergy;
+    }
+
+    private IEnumerator HitBlink()
+    {
+        _spriteRenderer.color = Color.red;
+        for (int i = 0; i < blinkHitTimes-1; i++)
+        {
+            yield return new WaitForSeconds(blinkHitDuration);
+            _spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(blinkHitDuration);
+            _spriteRenderer.color = Color.red;
+        }
+        yield return new WaitForSeconds(blinkHitDuration);
+        _spriteRenderer.color = Color.white;
     }
 
     private void OnDrawGizmos()

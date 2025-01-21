@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace AI
@@ -14,27 +15,29 @@ namespace AI
         public Transform[] patrolPoints;
 
         [SerializeField] private Animator childAnim;
+        [SerializeField] private int blinkHitTimes;
+        [SerializeField] private float blinkHitDuration;
 
         public Vector3 patrolCenter;
 
         private Animator _animator;
         
         private int _currentEnergy;
-        private bool _isAlive;
         private Collider2D _collider2D;
     
         private AudioSource _audioSource;
+        private SpriteRenderer _spriteRenderer;
 
-        
+
         // Start is called before the first frame update
         void Start()
         {
-            _isAlive = true;
             
             playerTransform = GameObject.Find("Player").transform;
             
             _collider2D = GetComponent<Collider2D>();
             _audioSource = GetComponentInChildren<AudioSource>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
             _animator = GetComponent<Animator>();
             
@@ -61,12 +64,13 @@ namespace AI
         {
             _currentEnergy -= damage;
 
+            StartCoroutine(HitBlink());
+
             if (_currentEnergy <= 0)
             {
                 //TODO: Gerenciar morte  do inimigo
                 _currentEnergy = 0;
                 //Destroy(gameObject);
-                _isAlive = false;
                 _collider2D.enabled = false;
                 childAnim.Play("Dead");
                 _animator.Play("Dead");
@@ -74,6 +78,20 @@ namespace AI
             }
 
             if (_currentEnergy > maxEnergy) _currentEnergy = maxEnergy;
+        }
+        
+        private IEnumerator HitBlink()
+        {
+            _spriteRenderer.color = Color.red;
+            for (int i = 0; i < blinkHitTimes-1; i++)
+            {
+                yield return new WaitForSeconds(blinkHitDuration);
+                _spriteRenderer.color = Color.white;
+                yield return new WaitForSeconds(blinkHitDuration);
+                _spriteRenderer.color = Color.red;
+            }
+            yield return new WaitForSeconds(blinkHitDuration);
+            _spriteRenderer.color = Color.white;
         }
         
         private void OnCollisionEnter2D(Collision2D other)
